@@ -5,14 +5,18 @@ require 'slop'
 require 'launchy'
 
 opts = Slop.parse!(ARGV){
-  banner "usage: serve_dir [DIR] [OPTIONS]"
-  on "-O", "--no-open", "don't open browser"
+  banner "usage: serve_dir DIR [OPTIONS]"
   on "-p", "--port=", 'http port (default: 8181)', as: :int
+  on "-O", "--no-open", "don't open browser"
   on "-h", "--help" do
     puts self.help
     exit
   end
 }
+if ARGV.size == 0
+  puts opts.help
+  exit
+end
 
 dir = File.expand_path(ARGV[0] || Dir.pwd)
 app = Rack::Builder.app{
