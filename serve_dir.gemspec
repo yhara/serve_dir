@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = ServeDir::VERSION
 
+  gem.add_dependency("slop", "~> 2")
   gem.add_dependency("rack", "~> 1.4.1")
-  #gem.add_dependency("launchy", "~> 2.1.0")
+  gem.add_dependency("launchy", "~> 2.1.0")
 end

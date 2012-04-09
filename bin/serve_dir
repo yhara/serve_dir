@@ -2,26 +2,28 @@
 require 'rack'
 require 'rack/directory'
 require 'slop'
+require 'launchy'
 
 opts = Slop.parse!(ARGV){
   banner "usage: serve_dir [DIR] [OPTIONS]"
-  on :p, :port, 'http port (default: 8181)'
-  on :h, :help do
+  on "-O", "--no-open", "don't open browser"
+  on "-p", "--port=", 'http port (default: 8181)', as: :int
+  on "-h", "--help" do
     puts self.help
     exit
   end
 }
 
 dir = File.expand_path(ARGV[0] || Dir.pwd)
-
 app = Rack::Builder.app{
   use Rack::CommonLogger
   use Rack::ShowExceptions
   run Rack::Directory.new(dir)
 }
 
-puts "Open http://localhost:8181/"
-Rack::Server.start(
-  :app => app,
-  :Port => (opts[:port] || 8181)
-  )
+port = opts[:port] || 8181
+url = "http://localhost:#{port}/"
+puts "Open #{url}"
+Launchy.open(url) unless opts["no-open"]
+
+Rack::Server.start(:app => app, :Port => port)
