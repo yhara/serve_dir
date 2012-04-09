@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'rack'
+require 'rack/directory'
 require 'slop'
 
 opts = Slop.parse!(ARGV){
@@ -11,21 +12,15 @@ opts = Slop.parse!(ARGV){
   end
 }
 
-require 'rack/directory_index'
-
 dir = File.expand_path(ARGV[0] || Dir.pwd)
+
 app = Rack::Builder.app{
-#  use Rack::CommonLogger
-#  use Rack::ShowExceptions
-  use Rack::Static, :urls => ["/"], :root => dir
-  run lambda{|env|
-    return [200, {"Content-Type" => "text/html"}, [
-      env.inspect
-    ]]
-    #[404, { "Content-Type" => "text/plain" }, ["Not found."]]
-  }
+  use Rack::CommonLogger
+  use Rack::ShowExceptions
+  run Rack::Directory.new(dir)
 }
 
+puts "Open http://localhost:8181/"
 Rack::Server.start(
   :app => app,
   :Port => (opts[:port] || 8181)

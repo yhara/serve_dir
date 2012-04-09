@@ -1,0 +1,38 @@
+serve_dir
+=========
+
+Suppose you are practicing JavaScript and Ajax.
+
+* a.html
+* b.js
+* c.txt : loaded by b.js with Ajax
+
+First you open a.html and notice c.txt can't be loaded:
+
+    XMLHttpRequest cannot load file:///somewhere/c.txt. Origin null is not allowed by Access-Control-Allow-Origin.
+
+Then you can type
+
+    $ gem i serve_dir
+    $ serve_dir .
+
+and open http://localhost:8181/a.html .
+
+Requirements
+============
+
+Ruby 1.9 (Don't know if it works with 1.8)
+
+License
+=======
+
+MIT
+
+Contact
+=======
+
+https://github.com/yhara/serve_dir
+
+Yutaka HARA (yhara)
+
+twitter: @yhara_en
