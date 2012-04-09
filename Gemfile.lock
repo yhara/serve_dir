@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rack-directory-index (0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rack-directory-index

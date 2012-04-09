@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'rack'
+require 'slop'
+
+opts = Slop.parse!(ARGV){
+  banner "usage: serve_dir [DIR] [OPTIONS]"
+  on :p, :port, 'http port (default: 8181)'
+  on :h, :help do
+    puts self.help
+    exit
+  end
+}
+
+require 'rack/directory_index'
+
+dir = File.expand_path(ARGV[0] || Dir.pwd)
+app = Rack::Builder.app{
+#  use Rack::CommonLogger
+#  use Rack::ShowExceptions
+  use Rack::Static, :urls => ["/"], :root => dir
+  run lambda{|env|
+    return [200, {"Content-Type" => "text/html"}, [
+      env.inspect
+    ]]
+    #[404, { "Content-Type" => "text/plain" }, ["Not found."]]
+  }
+}
+
+Rack::Server.start(
+  :app => app,
+  :Port => (opts[:port] || 8181)
+  )
