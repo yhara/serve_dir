@@ -1,22 +1,9 @@
 serve_dir
 =========
 
-Suppose you are practicing JavaScript and Ajax.
+Start local http server that serves contents of the given directory.
 
-* a.html
-* b.js
-* c.txt : loaded by b.js with Ajax
-
-First you open a.html and notice c.txt can't be loaded:
-
-    XMLHttpRequest cannot load file:///somewhere/c.txt. Origin null is not allowed by Access-Control-Allow-Origin.
-
-Then you can type
-
-    $ gem i serve_dir
-    $ serve_dir .
-
-and open http://localhost:8181/a.html .
+Useful for previewing static web sites with Ajax.
 
 Requirements
 ============
@@ -31,11 +18,12 @@ Install
 Usage
 =====
 
-serve_dir DIR [OPTIONS]
+    $ serve_dir DIR [options]
 
-OPTIONS:
+Options:
 
 * -p, --port=PORT : http port (default: 8181)
+*     --path=PATH : http path to open with browser (default: '/')
 * -O, --no-open : don't open browser (default: open browser automatically)
 * -h, --help : show help
 

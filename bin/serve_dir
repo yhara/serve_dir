@@ -5,20 +5,18 @@ require 'slop'
 require 'launchy'
 
 opts = Slop.parse!(ARGV){
-  banner "usage: serve_dir DIR [OPTIONS]"
-  on "-p", "--port=", 'http port (default: 8181)', as: :int
+  banner "Usage: serve_dir [options] DIR"
+  on "-p", "--port=", 'http port (default: 8181)', as: :int, default: 8181
+  on       "--path=", 'http path to open with browser (default: /)', default: '/'
   on "-O", "--no-open", "don't open browser"
-  on "-h", "--help" do
-    puts self.help
-    exit
-  end
+  on "-h", "--help"
 }
 if ARGV.size == 0
   puts opts.help
   exit
 end
+dir = File.expand_path(ARGV[0])
 
-dir = File.expand_path(ARGV[0] || Dir.pwd)
 app = Rack::Builder.app{
   use Rack::CommonLogger
   use Rack::ShowExceptions
@@ -26,8 +24,10 @@ app = Rack::Builder.app{
 }
 
 port = opts[:port] || 8181
-url = "http://localhost:#{port}/"
-puts "Open #{url}"
+path = opts[:path]
+path = "/" + path unless path.start_with?("/")
+url = "http://localhost:#{port}#{path}"
+puts url
 Launchy.open(url) unless opts["no-open"]
 
 Rack::Server.start(:app => app, :Port => port)
