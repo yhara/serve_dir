@@ -21,7 +21,7 @@ and open http://localhost:8181/a.html .
 Requirements
 ============
 
-Tested with Ruby 2.0.
+Ruby 2.0 (may work with older ruby)
 
 Install
 =======
