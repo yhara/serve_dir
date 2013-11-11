@@ -9,6 +9,7 @@ opts = Slop.parse!(ARGV){
   on "-p", "--port=", 'http port (default: 8181)', as: :int, default: 8181
   on       "--path=", 'http path to open with browser (default: /)', default: '/'
   on "-O", "--no-open", "don't open browser"
+  on "-I", "--rack-index", "don't complement `index.html` on startup"
   on "-h", "--help"
 }
 if ARGV.size == 0
@@ -26,8 +27,12 @@ app = Rack::Builder.app{
 port = opts[:port] || 8181
 path = opts[:path]
 path = "/" + path unless path.start_with?("/")
-url = "http://localhost:#{port}#{path}"
-puts url
-Launchy.open(url) unless opts["no-open"]
+# complement "index.html"
+if !opts["rack-index"] && File.exist?("#{dir}/index.html")
+  path = File.join(path, "index.html")
+end
+open_url = "http://localhost:#{port}#{path}"
+puts open_url
+Launchy.open(open_url) unless opts["no-open"]
 
 Rack::Server.start(:app => app, :Port => port)

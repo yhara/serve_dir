@@ -25,6 +25,7 @@ Options:
 * -p, --port=PORT : http port (default: 8181)
 *     --path=PATH : http path to open with browser (default: '/')
 * -O, --no-open : don't open browser (default: open browser automatically)
+* -I, --rack-index : don't complement 'index.html' on startup
 * -h, --help : show help
 
 License
