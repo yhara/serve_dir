@@ -3,7 +3,7 @@ PATH
   specs:
     serve_dir (0.2.0)
       launchy (~> 2.3.0)
-      rack (~> 1.4.1)
+      rack (~> 1.5)
       slop (~> 2)
 
 GEM
@@ -12,7 +12,7 @@ GEM
     addressable (2.3.5)
     launchy (2.3.0)
       addressable (~> 2.3)
-    rack (1.4.5)
+    rack (1.5.2)
     slop (2.4.4)
 
 PLATFORMS
